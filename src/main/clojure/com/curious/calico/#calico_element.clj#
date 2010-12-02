@@ -1,0 +1,8 @@
+(ns com.curious.calico.calico-element)
+
+(def default-element {:name ""
+                      :x 0 :y 0
+                      :width 0 :height 0
+                      :view-x 0 :view-y 0
+                      :image-left 0 :image-right 1 :image-bottom 0 :image-top 1
+                      :attach-to-view false})
