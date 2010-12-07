@@ -101,18 +101,20 @@
                               (swap! new-element
                                      (fn [x] (merge default-element {:role "Obstacle"
                                                                     :calico-display "Ellipse"})))))))))
+
 (def new-action 
      (proxy [AbstractAction] ["New"]
        (actionPerformed [_]
                         (let [new-project (calico-project)]
                           (swap! projects #(conj % new-project))))))
+
 (def close-action 
      (proxy [AbstractAction] ["Close"]
        (actionPerformed [_]
-                        (let [selected-panel (.getSelectedIndex project-pane)]
+                        (let [selected-panel (.getSelectedCompoent project-pane)]
                           (swap! projects
-                                 (fn [x] (concat (subvec x 0 selected-panel)
-                                                (subvec x (inc selected-panel)))))))))
+                                 (fn [x] (filter #(not= selected-panel (:panel x)))))))))
+
 (def open-action 
      (proxy [AbstractAction] ["Open"]
        (actionPerformed [_]
@@ -165,7 +167,7 @@
 (doto (.getContentPane frame)
       (.setLayout (GridBagLayout.))
       (.add toolbar (GridBagConstraints. 0 0
-                                          1 1
+                                          2 1
                                           1 0
                                           GridBagConstraints/CENTER
                                           GridBagConstraints/HORIZONTAL
